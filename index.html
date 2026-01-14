@@ -13,6 +13,23 @@
 <!-- DNS Prefetch para recursos não críticos -->
 <link href="https://cdn.tailwindcss.com" rel="dns-prefetch"/>
 <link href="https://script.google.com" rel="dns-prefetch"/>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1925661201147040');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1925661201147040&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 <!-- Fontes com display=swap para melhor performance -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap" rel="stylesheet"/>
@@ -571,6 +588,11 @@ document.getElementById('leadForm').addEventListener('submit', async function(e)
     errorMsg.classList.add('hidden');
     
     if (result.success) {
+        // Dispara conversão Meta Pixel - LEAD (apenas quando formulário é enviado com sucesso)
+        if (typeof fbq !== 'undefined') {
+            fbq('track', 'Lead');
+        }
+        
         // Sucesso - mostra mensagem visual
         submitBtn.textContent = 'Enviado!';
         submitBtn.classList.remove('bg-primary', 'hover:bg-[#b08d4a]');
