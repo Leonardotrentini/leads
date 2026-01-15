@@ -288,6 +288,35 @@ src="https://www.facebook.com/tr?id=1925661201147040&ev=PageView&noscript=1"
   </style>
   </head>
 <body class="bg-deep-green text-off-white font-sans antialiased selection:bg-primary selection:text-deep-green">
+<script>
+// Força a página a começar sempre no topo
+(function() {
+    // Remove hash da URL se existir
+    if (window.location.hash) {
+        history.replaceState(null, null, window.location.pathname + window.location.search);
+    }
+    
+    // Garante scroll no topo
+    window.scrollTo(0, 0);
+    
+    // Previne scroll automático em navegação com hash
+    window.addEventListener('hashchange', function(e) {
+        // Se for o primeiro carregamento com hash, remove
+        if (performance.navigation.type === 0 && window.location.hash === '#diagnostico') {
+            e.preventDefault();
+            history.replaceState(null, null, window.location.pathname);
+            window.scrollTo(0, 0);
+        }
+    }, false);
+    
+    // Força topo após carregamento completo
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            window.scrollTo(0, 0);
+        }, 0);
+    });
+})();
+</script>
 
 <!-- 1. HERO -->
 <header class="relative pt-12 md:pt-16 pb-16 md:pb-24 overflow-hidden min-h-[85vh] md:min-h-[90vh] flex items-center">
@@ -1028,6 +1057,8 @@ document.getElementById('whatsapp').addEventListener('input', function(e) {
         e.target.value = value;
     }
 });
+
+// Script já está no início do body, não precisa duplicar aqui
 
 // Controle do botão flutuante baseado no scroll
 (function() {
