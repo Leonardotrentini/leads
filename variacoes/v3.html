@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta name="description" content="Diagnóstico de vendas para lojistas de moda. Descubra onde está o gargalo da sua loja e o que ajustar para vender com mais previsibilidade."/>
+<meta name="theme-color" content="#0B2B21"/>
+<title>Diagnóstico de Vendas - VESTO co. (V3)</title>
+<!-- Preconnect para recursos críticos -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://i.ibb.co" rel="preconnect"/>
+<link href="https://www.youtube.com" rel="preconnect"/>
+<!-- DNS Prefetch para recursos não críticos -->
+<link href="https://cdn.tailwindcss.com" rel="dns-prefetch"/>
+<link href="https://script.google.com" rel="dns-prefetch"/>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1925661201147040');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1925661201147040&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+<!-- Fontes com display=swap para melhor performance -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#C9A45C", // Gold
+              "deep-green": "#0B2B21", // Main Background
+              "card-green": "#10372C", // Form Card
+              "darker-green": "#061A14", // Footer/Section alternate
+              "off-white": "#F4F1EA", // Main Text
+              "warm-grey": "#D1CDC7", // Secondary Text
+            },
+            fontFamily: {
+              display: ["'Playfair Display'", "serif"],
+              sans: ["'Inter'", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+            },
+            backgroundImage: {
+                'luxury-pattern': "url('https://www.transparenttextures.com/patterns/black-linen.png')",
+            }
+          },
+        },
+      };
+    </script>
+<style>
+        html { scroll-behavior: smooth; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0B2B21; }
+        ::-webkit-scrollbar-thumb { background: #C9A45C; border-radius: 3px; }::selection {
+            background: #C9A45C;
+            color: #0B2B21;
+        }
+        body {
+            background-color: #0B2B21;
+            color: #F4F1EA;
+        }
+        
+        /* Animações */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        .animate-fade-in-delay {
+            animation: fadeIn 0.8s ease-out 0.2s both;
+        }
+        
+        .animate-fade-in-delay-2 {
+            animation: fadeIn 0.8s ease-out 0.4s both;
+        }
+        
+        @keyframes pulseSlow {
+            0%, 100% {
+                opacity: 0.25;
+            }
+            50% {
+                opacity: 0.35;
+            }
+        }
+        
+        .animate-pulse-slow {
+            animation: pulseSlow 4s ease-in-out infinite;
+        }
+        
+        .animate-pulse-slow-delay {
+            animation: pulseSlow 4s ease-in-out infinite 2s;
+        }
+        
+        /* Tipografia */
+        header h1 {
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+                line-height: 1.25;
+                letter-spacing: -0.015em;
+            }
+            
+            /* Espaçamentos mobile */
+            section {
+                padding-top: 3rem !important;
+                padding-bottom: 3rem !important;
+            }
+            
+            /* Cards mobile */
+            .card-elevated {
+                padding: 1.5rem !important;
+            }
+            
+            /* Estatísticas mobile */
+            .stat-card {
+                min-height: 90px;
+                padding: 1rem !important;
+            }
+            
+            .stat-card p:first-child {
+                font-size: 1.5rem !important;
+            }
+            
+            /* Formulário mobile */
+            .form-section {
+                padding: 1.5rem !important;
+            }
+            
+            /* Elementos de conversão mobile */
+            .highlight-box {
+                padding: 1rem !important;
+            }
+        }
+        
+        /* Spinner de loading */
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(11, 43, 33, 0.3);
+            border-top-color: #0B2B21;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        
+        /* Animação de pulso para feedback imediato */
+        @keyframes pulseButton {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(201, 164, 92, 0.7);
+            }
+            50% {
+                transform: scale(0.98);
+                box-shadow: 0 0 0 8px rgba(201, 164, 92, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(201, 164, 92, 0);
+            }
+        }
+        
+        .button-pulse {
+            animation: pulseButton 0.4s ease-out;
+        }
+        
+        /* Animação de sucesso */
+        @keyframes successBounce {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+        
+        .success-animation {
+            animation: successBounce 0.5s ease-out;
+        }
+        
+        /* Botão flutuante mobile */
+        @media (min-width: 768px) {
+            .fixed.bottom-4 {
+                display: none;
+            }
+        }
+        
+        /* Animação do botão flutuante */
+        #floatingButton {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        
+        #floatingButton.translate-y-4 {
+            transform: translateY(1rem);
+        }
+        
+        #floatingButton.translate-y-0 {
+            transform: translateY(0);
+        }
+        
+        /* Melhorias visuais */
+        .card-elevated {
+            box-shadow: 0 20px 60px -15px rgba(0, 0, 0, 0.5),
+                        0 0 0 1px rgba(201, 164, 92, 0.1);
+        }
+        
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(201, 164, 92, 0.2) 50%, 
+                transparent 100%);
+        }
+        
+        .stat-card {
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, rgba(16, 55, 44, 0.4) 0%, rgba(6, 26, 20, 0.4) 100%);
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(201, 164, 92, 0.2);
+        }
+        
+        .stat-card p:first-child {
+            line-height: 1;
+        }
+        
+        .stat-card p:last-child {
+            line-height: 1.4;
+        }
+        
+        .form-section {
+            background: linear-gradient(135deg, rgba(16, 55, 44, 0.95) 0%, rgba(6, 26, 20, 0.95) 100%);
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(201, 164, 92, 0.15) 0%, rgba(201, 164, 92, 0.05) 100%);
+            border-left: 3px solid #C9A45C;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-deep-green text-off-white font-sans antialiased selection:bg-primary selection:text-deep-green">
+
+<!-- 1. HERO -->
+<header class="relative pt-12 md:pt-16 pb-16 md:pb-24 overflow-hidden min-h-[85vh] md:min-h-[90vh] flex items-center">
+<div class="max-w-md mx-auto px-4 md:px-6 relative z-10 text-center flex flex-col items-center w-full">
+<div class="mb-6 md:mb-8 animate-fade-in">
+<span class="inline-block px-3 md:px-4 py-1 md:py-1.5 border border-primary/30 rounded-full bg-primary/10 backdrop-blur-sm text-[9px] md:text-[10px] uppercase tracking-[0.2em] font-medium text-primary">
+                    Diagnóstico Estratégico
+                </span>
+</div>
+<h1 class="font-display text-3xl md:text-5xl font-normal leading-[1.2] mb-6 md:mb-8 text-off-white max-w-lg animate-fade-in-delay tracking-tight px-2">
+                O problema da sua loja não é produto.<br class="hidden md:block"/>É <span class="text-primary">estrutura de vendas</span>.
+</h1>
+<p class="text-warm-grey text-sm md:text-lg leading-[1.7] md:leading-[1.75] mb-8 md:mb-12 font-light max-w-md mx-auto animate-fade-in-delay-2 px-2">
+                Se sua loja até vende, mas não cresce com consistência, esse diagnóstico vai te mostrar onde está o gargalo e o que ajustar para vender com mais previsibilidade.
+            </p>
+<a class="inline-block w-full max-w-sm bg-primary hover:bg-[#b08d4a] text-deep-green font-bold py-4 md:py-5 px-6 md:px-8 rounded-full shadow-2xl shadow-primary/30 transition-all duration-300 uppercase tracking-widest text-xs md:text-sm hover:scale-105 hover:shadow-primary/40 animate-fade-in-delay-2" href="#diagnostico">
+                Falar com Especialista
+            </a>
+</div>
+<!-- Background effects -->
+<div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-lg pointer-events-none opacity-25 z-0">
+<div class="absolute top-20 right-0 w-80 h-80 bg-primary rounded-full blur-[120px] animate-pulse-slow"></div>
+<div class="absolute bottom-0 left-0 w-64 h-64 bg-primary rounded-full blur-[100px] animate-pulse-slow-delay"></div>
+</div>
+</header>
+
+<!-- 2. IDENTIFICAÇÃO (DOR) -->
+<section class="py-16 md:py-24 px-4 bg-darker-green relative">
+<div class="section-divider absolute top-0 left-0 right-0"></div>
+<div class="max-w-md mx-auto px-4 md:px-6">
+<div class="bg-card-green/40 border border-primary/30 rounded-xl md:rounded-2xl p-6 md:p-10 mb-8 backdrop-blur-sm card-elevated">
+<h2 class="font-display text-xl md:text-3xl text-off-white mb-8 md:mb-10 text-center">
+                Se você vende roupas, provavelmente já passou por isso:
+</h2>
+<ul class="space-y-4 md:space-y-6 mb-8 md:mb-10">
+<li class="flex items-start text-warm-grey leading-relaxed">
+<div class="w-6 h-6 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-0.5 flex-shrink-0">
+<span class="w-2 h-2 bg-primary rounded-full"></span>
+</div>
+                <span class="text-base">Alguns meses são bons, outros caem sem explicação</span>
+            </li>
+<li class="flex items-start text-warm-grey leading-relaxed">
+<div class="w-6 h-6 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-0.5 flex-shrink-0">
+<span class="w-2 h-2 bg-primary rounded-full"></span>
+</div>
+                <span class="text-base">Você posta, anuncia, tenta estratégias — mas nada é previsível</span>
+            </li>
+<li class="flex items-start text-warm-grey leading-relaxed">
+<div class="w-6 h-6 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-0.5 flex-shrink-0">
+<span class="w-2 h-2 bg-primary rounded-full"></span>
+</div>
+                <span class="text-base">Parece que está sempre ocupado(a), mas o faturamento não acompanha</span>
+            </li>
+<li class="flex items-start text-warm-grey leading-relaxed">
+<div class="w-6 h-6 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-0.5 flex-shrink-0">
+<span class="w-2 h-2 bg-primary rounded-full"></span>
+</div>
+                <span class="text-base">O produto é bom, mas a operação não escala</span>
+            </li>
+</ul>
+<div class="pt-6 border-t border-primary/20">
+<p class="text-primary font-semibold text-center text-lg">
+                    O problema não é falta de esforço. E quase nunca é o produto.
+                </p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 3. QUEBRA DE CRENÇA -->
+<section class="py-16 md:py-24 px-4 bg-deep-green relative">
+<div class="section-divider absolute top-0 left-0 right-0"></div>
+<div class="max-w-md mx-auto px-4 md:px-6">
+<div class="text-center mb-8 md:mb-10">
+<h2 class="font-display text-xl md:text-3xl text-off-white mb-6 md:mb-8">
+                Mais tráfego ou mais post não resolvem sozinhos.
+</h2>
+<div class="bg-card-green/40 border border-primary/30 rounded-xl md:rounded-2xl p-6 md:p-10 backdrop-blur-sm card-elevated">
+<div class="space-y-5 text-warm-grey leading-relaxed text-base">
+<p>
+                    A maioria das lojas de moda trava porque não tem um funil claro, não sabe onde o cliente se perde e não sabe qual métrica realmente importa.
+                </p>
+<div class="pt-4 border-t border-primary/20">
+<p class="text-primary font-semibold text-lg">
+                        Sem estrutura, tudo vira tentativa. Com estrutura, as vendas passam a fazer sentido.
+                    </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 4. O DIAGNÓSTICO -->
+<section class="py-16 md:py-24 px-4 bg-darker-green relative">
+<div class="section-divider absolute top-0 left-0 right-0"></div>
+<div class="max-w-md mx-auto px-4 md:px-6">
+<div class="bg-card-green/40 border border-primary/30 rounded-xl md:rounded-2xl p-6 md:p-10 backdrop-blur-sm card-elevated">
+<div class="text-center mb-8 md:mb-10">
+<span class="inline-block px-3 md:px-4 py-1 md:py-1.5 border border-primary/30 rounded-full bg-primary/10 text-[9px] md:text-[10px] uppercase tracking-[0.2em] font-medium text-primary mb-4 md:mb-6">
+                    O que você vai entender
+                </span>
+<h2 class="font-display text-xl md:text-3xl text-off-white mb-8 md:mb-10">
+                O que você vai entender nesse diagnóstico
+</h2>
+</div>
+<ul class="space-y-4 md:space-y-6 mb-8 md:mb-10">
+<li class="flex items-start text-warm-grey leading-relaxed">
+<div class="w-6 h-6 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-0.5 flex-shrink-0">
+<span class="material-icons text-primary text-sm">check</span>
+</div>
+                <span class="text-base">Onde sua loja está perdendo vendas hoje</span>
+            </li>
+<li class="flex items-start text-warm-grey leading-relaxed">
+<div class="w-6 h-6 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-0.5 flex-shrink-0">
+<span class="material-icons text-primary text-sm">check</span>
+</div>
+                <span class="text-base">Se o gargalo está no tráfego, na oferta, no funil ou no atendimento</span>
+            </li>
+<li class="flex items-start text-warm-grey leading-relaxed">
+<div class="w-6 h-6 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-0.5 flex-shrink-0">
+<span class="material-icons text-primary text-sm">check</span>
+</div>
+                <span class="text-base">O que ajustar antes de investir mais dinheiro</span>
+            </li>
+<li class="flex items-start text-warm-grey leading-relaxed">
+<div class="w-6 h-6 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-0.5 flex-shrink-0">
+<span class="material-icons text-primary text-sm">check</span>
+</div>
+                <span class="text-base">Qual é o próximo passo mais inteligente para o seu momento</span>
+            </li>
+</ul>
+<div class="pt-6 border-t border-primary/20">
+<p class="text-center text-warm-grey italic text-base">
+                    Sem fórmula mágica. Sem promessa vazia. Só clareza estratégica.
+                </p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- FEEDBACKS DE CLIENTES -->
+<section class="py-24 px-4 bg-deep-green relative">
+<div class="section-divider absolute top-0 left-0 right-0"></div>
+<div class="max-w-md mx-auto px-6">
+<div class="text-center mb-14">
+<span class="inline-block px-4 py-1.5 border border-primary/30 rounded-full bg-primary/10 text-[10px] uppercase tracking-[0.2em] font-medium text-primary mb-4">Resultados Reais</span>
+<h2 class="font-display text-3xl md:text-4xl mt-4 text-off-white">Lojistas que <span class="italic text-primary">cresceram</span></h2>
+</div>
+<div class="space-y-12">
+<div class="group">
+<a href="https://youtube.com/shorts/91PgdPhhsNo" target="_blank" class="block relative rounded-lg overflow-hidden mb-5 shadow-xl border border-white/5 bg-deep-green hover:border-primary/50 transition-colors">
+<div class="w-full" style="aspect-ratio: 9/16; position: relative; min-height: 400px; background: #0B2B21;">
+<iframe 
+    src="https://www.youtube.com/embed/91PgdPhhsNo" 
+    title="Resultado VESTO" 
+    frameborder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+    allowfullscreen
+    class="w-full h-full absolute inset-0"
+    loading="lazy"
+    onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center bg-deep-green\'><div class=\'text-center\'><span class=\'material-icons text-primary text-6xl mb-4\'>play_circle</span><p class=\'text-off-white text-sm\'>Clique para assistir</p></div></div>'">
+</iframe>
+<div class="absolute inset-0 flex items-center justify-center bg-deep-green/50 opacity-0 hover:opacity-100 transition-opacity pointer-events-none">
+<span class="material-icons text-primary text-6xl drop-shadow-lg">play_circle</span>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-deep-green via-deep-green/90 to-transparent pointer-events-none" style="height: 7rem; z-index: 5;"></div>
+<div class="absolute bottom-6 left-6 right-6 pointer-events-none" style="z-index: 10;">
+<p class="text-primary font-bold text-xl mb-2">R$ 187 mil/mês</p>
+<p class="text-off-white text-sm font-light leading-relaxed">De 18 a 187k mês de faturamento, resultado de a construção de um canal de aquisição forte</p>
+</div>
+</a>
+</div>
+<div class="group">
+<a href="https://youtube.com/shorts/BwLXIPatTHA" target="_blank" class="block relative rounded-lg overflow-hidden mb-5 shadow-xl border border-white/5 bg-deep-green hover:border-primary/50 transition-colors">
+<div class="w-full" style="aspect-ratio: 9/16; position: relative; min-height: 400px; background: #0B2B21;">
+<iframe 
+    src="https://www.youtube.com/embed/BwLXIPatTHA" 
+    title="Depoimento Cliente VESTO" 
+    frameborder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+    allowfullscreen
+    class="w-full h-full absolute inset-0"
+    loading="lazy"
+    onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center bg-deep-green\'><div class=\'text-center\'><span class=\'material-icons text-primary text-6xl mb-4\'>play_circle</span><p class=\'text-off-white text-sm\'>Clique para assistir</p></div></div>'">
+</iframe>
+<div class="absolute inset-0 flex items-center justify-center bg-deep-green/50 opacity-0 hover:opacity-100 transition-opacity pointer-events-none">
+<span class="material-icons text-primary text-6xl drop-shadow-lg">play_circle</span>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-deep-green via-deep-green/90 to-transparent pointer-events-none" style="height: 7rem; z-index: 5;"></div>
+<div class="absolute bottom-6 left-6 right-6 pointer-events-none" style="z-index: 10;">
+<p class="text-primary font-bold text-xl mb-2">TRIPLICOU SEU FATURAMENTO</p>
+<p class="text-off-white text-sm font-light leading-relaxed">Construimos esse resultado com um processo sólido que validamos ao longo do tempo...</p>
+</div>
+</a>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 5. POSICIONAMENTO -->
+<section class="py-24 px-4 bg-darker-green relative">
+<div class="section-divider absolute top-0 left-0 right-0"></div>
+<div class="max-w-md mx-auto px-6">
+<div class="text-center mb-10">
+<h2 class="font-display text-2xl md:text-3xl text-off-white mb-8">
+                Estrutura de vendas não é teoria. É prática.
+</h2>
+<div class="bg-card-green/40 border border-primary/30 rounded-2xl p-10 backdrop-blur-sm card-elevated">
+<div class="space-y-5 text-warm-grey leading-relaxed text-base">
+<p>
+                    Cada loja tem um cenário diferente. O erro é tentar aplicar a mesma solução para todo mundo.
+                </p>
+<p>
+                    O diagnóstico analisa sua operação real considerando tipo de produto, forma de venda, capacidade operacional e momento do negócio.
+                </p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 6. PARA QUEM É / NÃO É -->
+<section class="py-24 px-4 bg-deep-green relative">
+<div class="section-divider absolute top-0 left-0 right-0"></div>
+<div class="max-w-md mx-auto px-6 space-y-6">
+<div class="bg-card-green/50 border border-primary/30 rounded-2xl p-10 backdrop-blur-sm card-elevated">
+<h3 class="text-xs font-bold uppercase tracking-[0.2em] text-primary mb-6 flex items-center">
+<span class="material-icons text-base mr-2">check_circle</span> Para quem é
+                </h3>
+<ul class="space-y-5">
+<li class="flex items-start text-base text-warm-grey leading-relaxed">
+<div class="w-5 h-5 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-0.5 flex-shrink-0">
+<span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+</div>
+                        Lojistas de moda que querem vender com mais consistência
+                    </li>
+<li class="flex items-start text-base text-warm-grey leading-relaxed">
+<div class="w-5 h-5 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-0.5 flex-shrink-0">
+<span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+</div>
+                        Quem sente que trabalha muito e avança pouco
+                    </li>
+<li class="flex items-start text-base text-warm-grey leading-relaxed">
+<div class="w-5 h-5 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-0.5 flex-shrink-0">
+<span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+</div>
+                        Quem quer clareza antes de gastar mais dinheiro
+                    </li>
+</ul>
+</div>
+<div class="bg-card-green/30 border border-white/20 rounded-2xl p-10 backdrop-blur-sm opacity-90 card-elevated">
+<h3 class="text-xs font-bold uppercase tracking-[0.2em] text-warm-grey/70 mb-6 flex items-center">
+<span class="material-icons text-base mr-2">cancel</span> Não é para
+                </h3>
+<ul class="space-y-5">
+<li class="flex items-start text-base text-warm-grey/70 leading-relaxed">
+<div class="w-5 h-5 bg-warm-grey/20 rounded-full flex items-center justify-center mr-4 mt-0.5 flex-shrink-0">
+<span class="w-1.5 h-1.5 bg-warm-grey/50 rounded-full"></span>
+</div>
+                        Quem busca fórmula milagrosa
+                    </li>
+<li class="flex items-start text-base text-warm-grey/70 leading-relaxed">
+<div class="w-5 h-5 bg-warm-grey/20 rounded-full flex items-center justify-center mr-4 mt-0.5 flex-shrink-0">
+<span class="w-1.5 h-1.5 bg-warm-grey/50 rounded-full"></span>
+</div>
+                        Quem não quer ajustar processo
+                    </li>
+<li class="flex items-start text-base text-warm-grey/70 leading-relaxed">
+<div class="w-5 h-5 bg-warm-grey/20 rounded-full flex items-center justify-center mr-4 mt-0.5 flex-shrink-0">
+<span class="w-1.5 h-1.5 bg-warm-grey/50 rounded-full"></span>
+</div>
+                        Quem espera resultado sem estrutura
+                    </li>
+</ul>
+</div>
+</div>
+</section>
+
+<!-- 7. CTA FINAL COM ESTATÍSTICAS -->
+<section class="py-16 md:py-24 px-4 bg-deep-green relative">
+<div class="section-divider absolute top-0 left-0 right-0"></div>
+<div class="max-w-md mx-auto px-4 md:px-6 text-center">
+<div class="bg-card-green/40 border border-primary/30 rounded-xl md:rounded-2xl p-6 md:p-12 backdrop-blur-sm card-elevated">
+<!-- Estatísticas -->
+<div class="mb-8 md:mb-12 grid grid-cols-3 gap-2 md:gap-4">
+<div class="stat-card border border-primary/20 rounded-lg md:rounded-xl p-3 md:p-5">
+<p class="text-primary font-bold text-xl md:text-3xl mb-1 md:mb-2 leading-none text-center">+100</p>
+<p class="text-warm-grey text-[10px] md:text-xs font-medium leading-tight text-center">Lojistas atendidos</p>
+</div>
+<div class="stat-card border border-primary/20 rounded-lg md:rounded-xl p-3 md:p-5">
+<p class="text-primary font-bold text-xl md:text-3xl mb-1 md:mb-2 leading-none text-center">+10M</p>
+<p class="text-warm-grey text-[10px] md:text-xs font-medium leading-tight text-center">Investido em ADS</p>
+</div>
+<div class="stat-card border border-primary/20 rounded-lg md:rounded-xl p-3 md:p-5">
+<p class="text-primary font-bold text-xl md:text-3xl mb-1 md:mb-2 leading-none text-center">24h</p>
+<p class="text-warm-grey text-[10px] md:text-xs font-medium leading-tight text-center">Tempo de resposta</p>
+</div>
+</div>
+<h2 class="font-display text-xl md:text-3xl text-off-white mb-4 md:mb-6">
+                Quer entender por que sua loja não cresce como poderia?
+</h2>
+<p class="text-warm-grey text-sm md:text-lg leading-relaxed mb-8 md:mb-10 max-w-md mx-auto">
+                Em poucos minutos, você descobre onde está travando suas vendas e qual ajuste realmente faz diferença.
+            </p>
+<a class="inline-block w-full max-w-sm bg-primary hover:bg-[#b08d4a] text-deep-green font-bold py-4 md:py-5 px-6 md:px-8 rounded-full shadow-2xl shadow-primary/30 transition-all duration-300 uppercase tracking-widest text-xs md:text-sm hover:scale-105 hover:shadow-primary/40" href="#diagnostico">
+                Falar com Especialista
+            </a>
+</div>
+</div>
+</section>
+
+<!-- CTA FLUTUANTE MOBILE -->
+<div id="floatingButton" class="fixed bottom-4 left-4 right-4 z-50 md:hidden hidden transition-all duration-300 transform translate-y-0 opacity-0">
+<a href="#diagnostico" class="block w-full bg-primary text-deep-green font-bold py-4 px-6 rounded-full shadow-2xl shadow-primary/40 text-center text-sm uppercase tracking-widest hover:bg-[#b08d4a] transition-colors">
+                Falar com Especialista
+            </a>
+</div>
+
+<!-- 8. FORMULÁRIO COM SEGURANÇA -->
+<section class="py-16 md:py-24 px-4 relative z-20" id="diagnostico">
+<div class="section-divider absolute top-0 left-0 right-0"></div>
+<div class="max-w-md mx-auto relative">
+<div class="form-section border border-primary/30 rounded-xl md:rounded-2xl p-5 md:p-12 shadow-2xl shadow-black/50 relative overflow-hidden card-elevated">
+<div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-primary/0 via-primary to-primary/0 opacity-60"></div>
+<div class="text-center mb-6 md:mb-10">
+<span class="inline-block px-4 md:px-5 py-1.5 md:py-2 border-2 border-primary/40 rounded-full bg-primary/15 backdrop-blur-sm text-[9px] md:text-[10px] uppercase tracking-[0.2em] font-semibold text-primary mb-4 md:mb-5 shadow-lg shadow-primary/20">
+                    Diagnóstico de Vendas
+                </span>
+<h3 class="font-display text-2xl md:text-4xl text-off-white mb-2 md:mb-3">Preencha seus dados</h3>
+<p class="text-xs md:text-sm text-warm-grey/90 font-light">Receba seu diagnóstico em até 24h</p>
+</div>
+
+<!-- URGÊNCIA/ESCASSEZ -->
+<div class="mb-4 md:mb-6 p-4 md:p-5 bg-gradient-to-r from-primary/25 via-primary/20 to-primary/25 border-2 border-primary rounded-lg md:rounded-xl text-center animate-pulse-slow highlight-box">
+<div class="flex items-center justify-center mb-2 flex-wrap">
+<span class="material-icons text-primary text-lg md:text-xl mr-2">warning</span>
+<p class="text-primary font-bold text-xs md:text-sm">ÚLTIMAS 3 VAGAS DISPONÍVEIS</p>
+</div>
+<p class="text-warm-grey text-[10px] md:text-xs">Última vaga preenchida há 2 horas</p>
+</div>
+
+<!-- SOCIAL PROOF PRÓXIMO AO FORMULÁRIO -->
+<div class="mb-4 md:mb-6 p-4 md:p-5 bg-card-green/60 border border-primary/30 rounded-lg md:rounded-xl backdrop-blur-sm">
+<div class="flex items-center justify-center mb-2 flex-wrap">
+<span class="material-icons text-primary text-lg md:text-xl mr-2">star</span>
+<p class="text-primary text-xs md:text-sm font-bold">+100 lojistas já fizeram o diagnóstico</p>
+</div>
+<p class="text-warm-grey text-[10px] md:text-xs text-center">Último diagnóstico enviado há 15 minutos</p>
+</div>
+
+<!-- BENEFÍCIO IMEDIATO -->
+<div class="mb-4 md:mb-6 p-4 md:p-5 bg-gradient-to-br from-primary/15 to-primary/5 border border-primary/30 rounded-lg md:rounded-xl highlight-box">
+<p class="text-primary font-semibold text-xs md:text-sm mb-3 md:mb-4 flex items-center">
+<span class="material-icons text-primary text-sm md:text-base mr-2">gift</span>
+O que você recebe:
+</p>
+<ul class="text-[11px] md:text-xs text-warm-grey space-y-2 md:space-y-3 text-left">
+<li class="flex items-start">
+<span class="material-icons text-primary text-sm md:text-base mr-2 md:mr-3 mt-0.5">check_circle</span>
+<span class="flex-1">Diagnóstico completo em até 24h</span>
+</li>
+<li class="flex items-start">
+<span class="material-icons text-primary text-sm md:text-base mr-2 md:mr-3 mt-0.5">check_circle</span>
+<span class="flex-1">Identificação do seu gargalo específico</span>
+</li>
+<li class="flex items-start">
+<span class="material-icons text-primary text-sm md:text-base mr-2 md:mr-3 mt-0.5">check_circle</span>
+<span class="flex-1">Próximo passo recomendado para sua loja</span>
+</li>
+</ul>
+</div>
+
+<!-- MICRO-COMMITMENTS -->
+<div class="mb-4 md:mb-6 p-4 md:p-5 bg-card-green/40 border border-primary/25 rounded-lg md:rounded-xl backdrop-blur-sm">
+<p class="text-xs md:text-sm text-warm-grey mb-3 md:mb-4 font-medium">Antes de preencher, confirme:</p>
+<div class="space-y-2 md:space-y-3">
+<label class="flex items-start text-[11px] md:text-xs text-warm-grey">
+<input type="checkbox" class="mr-2 md:mr-3 mt-1 w-3.5 h-3.5 md:w-4 md:h-4 accent-primary" checked disabled>
+<span class="flex-1 leading-tight">Minha loja vende, mas não cresce com consistência</span>
+</label>
+<label class="flex items-start text-[11px] md:text-xs text-warm-grey">
+<input type="checkbox" class="mr-2 md:mr-3 mt-1 w-3.5 h-3.5 md:w-4 md:h-4 accent-primary" checked disabled>
+<span class="flex-1 leading-tight">Quero entender onde está o gargalo</span>
+</label>
+</div>
+</div>
+
+<!-- Segurança -->
+<div class="mb-6 md:mb-8 grid grid-cols-2 gap-2 md:gap-4">
+<div class="bg-deep-green/40 border border-primary/20 rounded-lg md:rounded-xl p-3 md:p-5 flex flex-col items-center text-center hover:border-primary/40 transition-colors">
+<span class="material-icons text-primary text-3xl md:text-4xl mb-2 md:mb-3">lock</span>
+<p class="text-[10px] md:text-xs text-warm-grey font-semibold leading-tight">Diagnóstico gratuito</p>
+</div>
+<div class="bg-deep-green/40 border border-primary/20 rounded-lg md:rounded-xl p-3 md:p-5 flex flex-col items-center text-center hover:border-primary/40 transition-colors">
+<span class="material-icons text-primary text-3xl md:text-4xl mb-2 md:mb-3">person</span>
+<p class="text-[10px] md:text-xs text-warm-grey font-semibold leading-tight">Atendimento humano</p>
+</div>
+<div class="bg-deep-green/40 border border-primary/20 rounded-lg md:rounded-xl p-3 md:p-5 flex flex-col items-center text-center hover:border-primary/40 transition-colors">
+<span class="material-icons text-primary text-3xl md:text-4xl mb-2 md:mb-3">check_circle</span>
+<p class="text-[10px] md:text-xs text-warm-grey font-semibold leading-tight">Sem compromisso</p>
+</div>
+<div class="bg-deep-green/40 border border-primary/20 rounded-lg md:rounded-xl p-3 md:p-5 flex flex-col items-center text-center hover:border-primary/40 transition-colors">
+<span class="material-icons text-primary text-3xl md:text-4xl mb-2 md:mb-3">security</span>
+<p class="text-[10px] md:text-xs text-warm-grey font-semibold leading-tight">Dados protegidos</p>
+</div>
+</div>
+
+<form id="leadForm" class="space-y-4 md:space-y-6">
+<div>
+<label class="block text-[9px] md:text-[10px] font-medium text-warm-grey uppercase tracking-widest mb-1.5 md:mb-2 ml-1">Nome Completo</label>
+<input id="nome" name="nome" required class="w-full bg-deep-green/50 border border-primary/20 rounded-lg px-3 md:px-4 py-3 md:py-3.5 text-off-white placeholder-white/20 focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-colors text-sm" placeholder="Seu nome" type="text"/>
+</div>
+<div>
+<label class="block text-[9px] md:text-[10px] font-medium text-warm-grey uppercase tracking-widest mb-1.5 md:mb-2 ml-1">WhatsApp</label>
+<input id="whatsapp" name="whatsapp" required class="w-full bg-deep-green/50 border border-primary/20 rounded-lg px-3 md:px-4 py-3 md:py-3.5 text-off-white placeholder-white/20 focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-colors text-sm" placeholder="(00) 00000-0000" type="tel"/>
+</div>
+<div>
+<label class="block text-[9px] md:text-[10px] font-medium text-warm-grey uppercase tracking-widest mb-1.5 md:mb-2 ml-1">Marca / Instagram <span class="text-warm-grey/60 normal-case">(opcional)</span></label>
+<input id="marca" name="marca" class="w-full bg-deep-green/50 border border-primary/20 rounded-lg px-3 md:px-4 py-3 md:py-3.5 text-off-white placeholder-white/20 focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-colors text-sm" placeholder="@suamarca (opcional)" type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-2 md:gap-4">
+<div>
+<label class="block text-[9px] md:text-[10px] font-medium text-warm-grey uppercase tracking-widest mb-1.5 md:mb-2 ml-1">Faturamento Mensal</label>
+<select id="faturamento" name="faturamento" required class="w-full bg-deep-green/50 border border-primary/20 rounded-lg px-3 md:px-4 py-3 md:py-3.5 text-off-white focus:ring-1 focus:ring-primary focus:border-primary outline-none appearance-none text-sm">
+<option>Até 10k</option>
+<option>20 - 30k</option>
+<option>30 a 50k</option>
+<option>50k - 100k</option>
+<option>100k - 300k</option>
+<option>Acima de 300k</option>
+</select>
+</div>
+<div>
+<label class="block text-[9px] md:text-[10px] font-medium text-warm-grey uppercase tracking-widest mb-1.5 md:mb-2 ml-1">Investimento Mensal</label>
+<select id="investimento" name="investimento" required class="w-full bg-deep-green/50 border border-primary/20 rounded-lg px-3 md:px-4 py-3 md:py-3.5 text-off-white focus:ring-1 focus:ring-primary focus:border-primary outline-none appearance-none text-sm">
+<option>Menos de 1k</option>
+<option>1 - 3k</option>
+<option>3 - 5k</option>
+<option>5 - 8k</option>
+<option>8 - 10k</option>
+<option>+10k</option>
+</select>
+</div>
+</div>
+<button id="submitBtn" class="w-full mt-6 md:mt-8 bg-primary hover:bg-[#b08d4a] text-deep-green font-bold py-4 md:py-4 rounded-lg transition-all duration-300 uppercase text-xs tracking-widest shadow-lg shadow-primary/10 relative overflow-hidden" type="submit">
+                        <span id="buttonText">Falar com Especialista</span>
+                        <span id="buttonSpinner" class="hidden"><span class="spinner"></span>Enviando...</span>
+                    </button>
+                    
+<!-- GARANTIA/RISCO REVERSO -->
+<p class="text-center text-xs text-warm-grey mt-4">
+    <span class="text-primary font-semibold">100% gratuito</span> • 
+    <span class="text-primary font-semibold">Sem compromisso</span> • 
+    <span class="text-primary font-semibold">Dados protegidos</span>
+</p>
+                    
+<!-- Mensagem de sucesso -->
+<div id="successMessage" class="hidden mt-6 p-4 bg-primary/20 border-2 border-primary rounded-lg text-center">
+    <div class="flex items-center justify-center mb-2">
+        <span class="material-icons text-primary text-3xl mr-2">check_circle</span>
+        <h4 class="text-primary font-bold text-sm uppercase tracking-widest">Enviado com sucesso!</h4>
+    </div>
+    <p class="text-warm-grey text-xs mt-2">Nossa equipe entrará em contato em até 24h.</p>
+</div>
+
+<!-- Mensagem de erro -->
+<div id="errorMessage" class="hidden mt-6 p-4 bg-red-600/20 border-2 border-red-600 rounded-lg text-center">
+    <div class="flex items-center justify-center mb-2">
+        <span class="material-icons text-red-400 text-3xl mr-2">error</span>
+        <h4 class="text-red-400 font-bold text-sm uppercase tracking-widest">Erro ao enviar</h4>
+    </div>
+    <p class="text-warm-grey text-xs mt-2">Tente novamente ou entre em contato conosco.</p>
+</div>
+
+<p class="text-center text-[10px] text-warm-grey/60 mt-5">
+                        Seus dados estão seguros. Nossa equipe entrará em contato em até 24h.
+                    </p>
+</form>
+</div>
+</div>
+</section>
+
+<!-- Footer -->
+<section class="py-16 bg-darker-green border-t border-white/5 text-off-white">
+<div class="max-w-md mx-auto px-6 text-center">
+<div class="flex items-center justify-center opacity-80 mb-8">
+<div class="font-display font-bold text-xl tracking-tighter text-off-white">
+                        <img src="https://i.ibb.co/8nsvs7ng/Design-sem-nome-75.png" alt="VESTO co." class="h-16 md:h-20 w-auto opacity-80" loading="lazy" width="200" height="60"/>
+</div>
+</div>
+<p class="text-xs text-warm-grey/60 leading-relaxed">
+                    © 2024 VESTO co. Todos os direitos reservados.
+                </p>
+</div>
+</section>
+
+<script>
+// Função para capturar todos os parâmetros UTM da URL
+function getUTMParams() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const utmParams = {};
+    
+    // IDENTIFICADOR AUTOMÁTICO DA VERSÃO V3
+    utmParams['variacao'] = 'v3';
+    
+    // Lista de parâmetros UTM padrão
+    const utmKeys = [
+        'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content',
+        'utm_id', 'utm_source_platform', 'utm_creative_format', 'utm_marketing_tactic'
+    ];
+    
+    // Captura todos os parâmetros UTM
+    utmKeys.forEach(key => {
+        const value = urlParams.get(key);
+        if (value) {
+            utmParams[key] = value;
+        }
+    });
+    
+    // Captura outros parâmetros comuns de tracking
+    const otherParams = ['gclid', 'fbclid', 'ref', 'source'];
+    otherParams.forEach(key => {
+        const value = urlParams.get(key);
+        if (value) {
+            utmParams[key] = value;
+        }
+    });
+    
+    // Adiciona URL completa e timestamp
+    utmParams['url_completa'] = window.location.href;
+    utmParams['timestamp'] = new Date().toISOString();
+    utmParams['user_agent'] = navigator.userAgent;
+    
+    return utmParams;
+}
+
+// Função para enviar dados para Google Sheets
+async function submitToGoogleSheets(formData) {
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwdOefsZSNRyort_lt204O0ToTjhqcWFoLnvx1GfLryXgEknz_VCL62bXst072QSt1W/exec';
+    
+    const allData = {
+        ...formData,
+        ...getUTMParams()
+    };
+    
+    try {
+        let iframe = document.getElementById('hidden_iframe');
+        if (!iframe) {
+            iframe = document.createElement('iframe');
+            iframe.id = 'hidden_iframe';
+            iframe.name = 'hidden_iframe';
+            iframe.style.display = 'none';
+            document.body.appendChild(iframe);
+        }
+
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = GOOGLE_SCRIPT_URL;
+        form.target = 'hidden_iframe';
+
+        Object.entries(allData).forEach(([key, value]) => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = key;
+            input.value = value ?? '';
+            form.appendChild(input);
+        });
+
+        const done = new Promise((resolve) => {
+            const onLoad = () => {
+                iframe.removeEventListener('load', onLoad);
+                resolve(true);
+            };
+            iframe.addEventListener('load', onLoad);
+        });
+
+        document.body.appendChild(form);
+        form.submit();
+
+        setTimeout(() => {
+            if (form.parentNode) document.body.removeChild(form);
+        }, 1500);
+
+        await done;
+        return { success: true };
+    } catch (error) {
+        console.error('Erro ao enviar dados:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+// Event listener para o formulário
+document.getElementById('leadForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const submitBtn = document.getElementById('submitBtn');
+    const buttonText = document.getElementById('buttonText');
+    const buttonSpinner = document.getElementById('buttonSpinner');
+    const originalText = buttonText.textContent;
+    
+    // FEEDBACK IMEDIATO
+    submitBtn.classList.add('button-pulse');
+    submitBtn.style.transform = 'scale(0.98)';
+    
+    submitBtn.disabled = true;
+    submitBtn.classList.add('opacity-90', 'cursor-not-allowed');
+    submitBtn.style.pointerEvents = 'none';
+    
+    buttonText.classList.add('hidden');
+    buttonSpinner.classList.remove('hidden');
+    
+    submitBtn.style.background = 'linear-gradient(90deg, #C9A45C 0%, #b08d4a 50%, #C9A45C 100%)';
+    submitBtn.style.backgroundSize = '200% 100%';
+    submitBtn.style.animation = 'none';
+    
+    let loadingAnimation = setInterval(() => {
+        const currentBg = submitBtn.style.backgroundPosition || '0%';
+        const newPos = currentBg === '0%' ? '100%' : '0%';
+        submitBtn.style.backgroundPosition = newPos;
+    }, 800);
+    
+    const formData = {
+        nome: document.getElementById('nome').value,
+        whatsapp: document.getElementById('whatsapp').value,
+        marca: document.getElementById('marca').value || '', // Opcional
+        faturamento: document.getElementById('faturamento').value,
+        investimento: document.getElementById('investimento').value
+    };
+    
+    const result = await submitToGoogleSheets(formData);
+    
+    const successMsg = document.getElementById('successMessage');
+    const errorMsg = document.getElementById('errorMessage');
+    
+    successMsg.classList.add('hidden');
+    errorMsg.classList.add('hidden');
+    
+    clearInterval(loadingAnimation);
+    submitBtn.style.background = '';
+    submitBtn.style.backgroundPosition = '';
+    
+    if (result.success) {
+        if (typeof fbq !== 'undefined') {
+            fbq('track', 'Lead');
+        }
+        
+        submitBtn.classList.remove('button-pulse');
+        submitBtn.classList.add('success-animation');
+        submitBtn.style.transform = 'scale(1)';
+        submitBtn.style.background = '#10b981';
+        
+        buttonSpinner.classList.add('hidden');
+        buttonText.classList.remove('hidden');
+        buttonText.textContent = '✓ Enviado com Sucesso!';
+        buttonText.style.color = '#0B2B21';
+        
+        successMsg.classList.remove('hidden');
+        successMsg.style.opacity = '0';
+        successMsg.style.transform = 'translateY(-10px)';
+        
+        setTimeout(() => {
+            successMsg.style.transition = 'all 0.4s ease-out';
+            successMsg.style.opacity = '1';
+            successMsg.style.transform = 'translateY(0)';
+        }, 50);
+        
+        setTimeout(() => {
+            successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 300);
+        
+        document.getElementById('leadForm').reset();
+        
+        setTimeout(() => {
+            submitBtn.style.background = '';
+            submitBtn.style.transform = '';
+            submitBtn.classList.remove('success-animation', 'opacity-90', 'cursor-not-allowed');
+            submitBtn.classList.add('bg-primary', 'hover:bg-[#b08d4a]');
+            submitBtn.disabled = false;
+            submitBtn.style.pointerEvents = 'auto';
+            buttonText.textContent = originalText;
+            buttonText.style.color = '';
+            successMsg.classList.add('hidden');
+            successMsg.style.opacity = '';
+            successMsg.style.transform = '';
+        }, 5000);
+    } else {
+        submitBtn.classList.remove('button-pulse');
+        submitBtn.style.transform = 'scale(1)';
+        submitBtn.style.background = '#dc2626';
+        
+        buttonSpinner.classList.add('hidden');
+        buttonText.classList.remove('hidden');
+        buttonText.textContent = '✗ Erro ao Enviar';
+        buttonText.style.color = '#F4F1EA';
+        
+        errorMsg.classList.remove('hidden');
+        errorMsg.style.opacity = '0';
+        errorMsg.style.transform = 'translateY(-10px)';
+        
+        setTimeout(() => {
+            errorMsg.style.transition = 'all 0.4s ease-out';
+            errorMsg.style.opacity = '1';
+            errorMsg.style.transform = 'translateY(0)';
+        }, 50);
+        
+        errorMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        
+        setTimeout(() => {
+            submitBtn.style.background = '';
+            submitBtn.style.transform = '';
+            submitBtn.classList.remove('opacity-90', 'cursor-not-allowed');
+            submitBtn.classList.add('bg-primary', 'hover:bg-[#b08d4a]');
+            submitBtn.disabled = false;
+            submitBtn.style.pointerEvents = 'auto';
+            buttonText.textContent = originalText;
+            buttonText.style.color = '';
+            errorMsg.classList.add('hidden');
+            errorMsg.style.opacity = '';
+            errorMsg.style.transform = '';
+        }, 3000);
+    }
+});
+
+// Máscara para WhatsApp
+document.getElementById('whatsapp').addEventListener('input', function(e) {
+    let value = e.target.value.replace(/\D/g, '');
+    if (value.length <= 11) {
+        if (value.length <= 2) {
+            value = value;
+        } else if (value.length <= 7) {
+            value = `(${value.slice(0, 2)}) ${value.slice(2)}`;
+        } else {
+            value = `(${value.slice(0, 2)}) ${value.slice(2, 7)}-${value.slice(7)}`;
+        }
+        e.target.value = value;
+    }
+});
+
+// Controle do botão flutuante baseado no scroll
+(function() {
+    const floatingButton = document.getElementById('floatingButton');
+    if (!floatingButton) return;
+    
+    let lastScrollTop = 0;
+    const scrollThreshold = 300; // Aparece após 300px de scroll
+    
+    function handleScroll() {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        
+        // Mostra o botão após o threshold de scroll
+        if (scrollTop > scrollThreshold) {
+            floatingButton.classList.remove('hidden', 'opacity-0', 'translate-y-4');
+            floatingButton.classList.add('opacity-100', 'translate-y-0');
+        } else {
+            floatingButton.classList.add('opacity-0', 'translate-y-4');
+            floatingButton.classList.remove('opacity-100', 'translate-y-0');
+            // Mantém hidden se estiver no topo
+            if (scrollTop < 50) {
+                floatingButton.classList.add('hidden');
+            }
+        }
+        
+        lastScrollTop = scrollTop;
+    }
+    
+    // Throttle para melhor performance
+    let ticking = false;
+    window.addEventListener('scroll', function() {
+        if (!ticking) {
+            window.requestAnimationFrame(function() {
+                handleScroll();
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }, { passive: true });
+    
+    // Verifica na carga inicial
+    handleScroll();
+})();
+</script>
+
+</body></html>

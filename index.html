@@ -162,6 +162,57 @@ src="https://www.facebook.com/tr?id=1925661201147040&ev=PageView&noscript=1"
             background-clip: text;
             display: inline-block;
         }
+        
+        /* Spinner de loading */
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(11, 43, 33, 0.3);
+            border-top-color: #0B2B21;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        
+        /* Animação de pulso para feedback imediato */
+        @keyframes pulseButton {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(201, 164, 92, 0.7);
+            }
+            50% {
+                transform: scale(0.98);
+                box-shadow: 0 0 0 8px rgba(201, 164, 92, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(201, 164, 92, 0);
+            }
+        }
+        
+        .button-pulse {
+            animation: pulseButton 0.4s ease-out;
+        }
+        
+        /* Animação de sucesso */
+        @keyframes successBounce {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+        
+        .success-animation {
+            animation: successBounce 0.5s ease-out;
+        }
     </style>
 <style>
     body {
@@ -244,8 +295,9 @@ src="https://www.facebook.com/tr?id=1925661201147040&ev=PageView&noscript=1"
 </select>
 </div>
 </div>
-<button id="submitBtn" class="w-full mt-8 bg-primary hover:bg-[#b08d4a] text-deep-green font-bold py-4 rounded-lg transition-colors uppercase text-xs tracking-widest shadow-lg shadow-primary/10" type="submit">
-                        Solicitar Diagnóstico
+<button id="submitBtn" class="w-full mt-8 bg-primary hover:bg-[#b08d4a] text-deep-green font-bold py-4 rounded-lg transition-all duration-300 uppercase text-xs tracking-widest shadow-lg shadow-primary/10 relative overflow-hidden" type="submit">
+                        <span id="buttonText">Solicitar Diagnóstico</span>
+                        <span id="buttonSpinner" class="hidden"><span class="spinner"></span>Enviando...</span>
                     </button>
                     
 <!-- Mensagem de sucesso -->
@@ -560,12 +612,34 @@ document.getElementById('leadForm').addEventListener('submit', async function(e)
     e.preventDefault();
     
     const submitBtn = document.getElementById('submitBtn');
-    const originalText = submitBtn.textContent;
+    const buttonText = document.getElementById('buttonText');
+    const buttonSpinner = document.getElementById('buttonSpinner');
+    const originalText = buttonText.textContent;
     
-    // Desabilita botão e mostra loading
+    // FEEDBACK IMEDIATO: Animação de pulso e mudança visual instantânea
+    submitBtn.classList.add('button-pulse');
+    submitBtn.style.transform = 'scale(0.98)';
+    
+    // Desabilita botão e mostra loading IMEDIATAMENTE
     submitBtn.disabled = true;
-    submitBtn.textContent = 'Enviando...';
-    submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+    submitBtn.classList.add('opacity-90', 'cursor-not-allowed');
+    submitBtn.style.pointerEvents = 'none';
+    
+    // Mostra spinner e esconde texto original
+    buttonText.classList.add('hidden');
+    buttonSpinner.classList.remove('hidden');
+    
+    // Adiciona efeito visual de "processando"
+    submitBtn.style.background = 'linear-gradient(90deg, #C9A45C 0%, #b08d4a 50%, #C9A45C 100%)';
+    submitBtn.style.backgroundSize = '200% 100%';
+    submitBtn.style.animation = 'none'; // Remove animação anterior
+    
+    // Animação de loading no background
+    let loadingAnimation = setInterval(() => {
+        const currentBg = submitBtn.style.backgroundPosition || '0%';
+        const newPos = currentBg === '0%' ? '100%' : '0%';
+        submitBtn.style.backgroundPosition = newPos;
+    }, 800);
     
     // Coleta dados do formulário
     const formData = {
@@ -587,55 +661,102 @@ document.getElementById('leadForm').addEventListener('submit', async function(e)
     successMsg.classList.add('hidden');
     errorMsg.classList.add('hidden');
     
+    // Para animação de loading
+    clearInterval(loadingAnimation);
+    submitBtn.style.background = '';
+    submitBtn.style.backgroundPosition = '';
+    
     if (result.success) {
         // Dispara conversão Meta Pixel - LEAD (apenas quando formulário é enviado com sucesso)
         if (typeof fbq !== 'undefined') {
             fbq('track', 'Lead');
         }
         
-        // Sucesso - mostra mensagem visual
-        submitBtn.textContent = 'Enviado!';
-        submitBtn.classList.remove('bg-primary', 'hover:bg-[#b08d4a]');
-        submitBtn.classList.add('bg-green-600');
+        // FEEDBACK IMEDIATO DE SUCESSO
+        submitBtn.classList.remove('button-pulse');
+        submitBtn.classList.add('success-animation');
+        submitBtn.style.transform = 'scale(1)';
+        submitBtn.style.background = '#10b981'; // Verde sucesso
         
-        // Mostra mensagem de sucesso
+        // Esconde spinner e mostra texto de sucesso
+        buttonSpinner.classList.add('hidden');
+        buttonText.classList.remove('hidden');
+        buttonText.textContent = '✓ Enviado com Sucesso!';
+        buttonText.style.color = '#0B2B21';
+        
+        // Mostra mensagem de sucesso IMEDIATAMENTE com animação
         successMsg.classList.remove('hidden');
-        successMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        successMsg.style.opacity = '0';
+        successMsg.style.transform = 'translateY(-10px)';
         
-        // Limpa formulário
-        document.getElementById('leadForm').reset();
+        // Animação de entrada da mensagem
+        setTimeout(() => {
+            successMsg.style.transition = 'all 0.4s ease-out';
+            successMsg.style.opacity = '1';
+            successMsg.style.transform = 'translateY(0)';
+        }, 50);
         
         // Scroll suave para a mensagem
         setTimeout(() => {
             successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }, 100);
+        }, 300);
+        
+        // Limpa formulário
+        document.getElementById('leadForm').reset();
         
         // Reseta botão após 5 segundos
         setTimeout(() => {
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-            submitBtn.classList.remove('opacity-50', 'cursor-not-allowed', 'bg-green-600');
+            submitBtn.style.background = '';
+            submitBtn.style.transform = '';
+            submitBtn.classList.remove('success-animation', 'opacity-90', 'cursor-not-allowed');
             submitBtn.classList.add('bg-primary', 'hover:bg-[#b08d4a]');
+            submitBtn.disabled = false;
+            submitBtn.style.pointerEvents = 'auto';
+            buttonText.textContent = originalText;
+            buttonText.style.color = '';
             successMsg.classList.add('hidden');
+            successMsg.style.opacity = '';
+            successMsg.style.transform = '';
         }, 5000);
     } else {
-        // Erro - mostra mensagem visual
-        submitBtn.textContent = 'Erro ao enviar';
-        submitBtn.classList.remove('bg-primary', 'hover:bg-[#b08d4a]');
-        submitBtn.classList.add('bg-red-600');
+        // Erro - feedback visual imediato
+        submitBtn.classList.remove('button-pulse');
+        submitBtn.style.transform = 'scale(1)';
+        submitBtn.style.background = '#dc2626'; // Vermelho erro
         
-        // Mostra mensagem de erro
+        // Esconde spinner e mostra texto de erro
+        buttonSpinner.classList.add('hidden');
+        buttonText.classList.remove('hidden');
+        buttonText.textContent = '✗ Erro ao Enviar';
+        buttonText.style.color = '#F4F1EA';
+        
+        // Mostra mensagem de erro com animação
         errorMsg.classList.remove('hidden');
+        errorMsg.style.opacity = '0';
+        errorMsg.style.transform = 'translateY(-10px)';
+        
+        setTimeout(() => {
+            errorMsg.style.transition = 'all 0.4s ease-out';
+            errorMsg.style.opacity = '1';
+            errorMsg.style.transform = 'translateY(0)';
+        }, 50);
+        
         errorMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         
-        // Reseta botão após 5 segundos
+        // Reseta botão após 3 segundos
         setTimeout(() => {
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-            submitBtn.classList.remove('opacity-50', 'cursor-not-allowed', 'bg-red-600');
+            submitBtn.style.background = '';
+            submitBtn.style.transform = '';
+            submitBtn.classList.remove('opacity-90', 'cursor-not-allowed');
             submitBtn.classList.add('bg-primary', 'hover:bg-[#b08d4a]');
+            submitBtn.disabled = false;
+            submitBtn.style.pointerEvents = 'auto';
+            buttonText.textContent = originalText;
+            buttonText.style.color = '';
             errorMsg.classList.add('hidden');
-        }, 5000);
+            errorMsg.style.opacity = '';
+            errorMsg.style.transform = '';
+        }, 3000);
     }
 });
 
