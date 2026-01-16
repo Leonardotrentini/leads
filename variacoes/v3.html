@@ -11,23 +11,35 @@
 <link href="https://i.ibb.co" rel="preconnect"/>
 <!-- DNS Prefetch para recursos não críticos -->
 <link href="https://script.google.com" rel="dns-prefetch"/>
-<!-- Fontes otimizadas - carregar apenas pesos necessários com display=optional -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@400;600;700&display=optional" rel="stylesheet"/>
-<!-- Meta Pixel Code - Carregado após página carregar (defer) -->
+<!-- Fontes - carregamento assíncrono para não bloquear renderização -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet"></noscript>
+<!-- Meta Pixel Code - Carregado após interação do usuário (não bloqueia renderização) -->
 <script>
-// Carregar Meta Pixel apenas após load completo
-window.addEventListener('load', function() {
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '1925661201147040');
-    fbq('track', 'PageView');
-}, { once: true });
+// Carregar Meta Pixel apenas após interação ou 3 segundos
+(function() {
+    let loaded = false;
+    function loadPixel() {
+        if(loaded) return;
+        loaded = true;
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '1925661201147040');
+        fbq('track', 'PageView');
+    }
+    // Carregar após interação
+    ['mousedown','touchstart','scroll','keydown'].forEach(function(e) {
+        document.addEventListener(e, loadPixel, { once: true, passive: true });
+    });
+    // Fallback: carregar após 3 segundos
+    setTimeout(loadPixel, 3000);
+})();
 </script>
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=1925661201147040&ev=PageView&noscript=1"
@@ -264,7 +276,7 @@ src="https://www.facebook.com/tr?id=1925661201147040&ev=PageView&noscript=1"
         }
         
         *{box-sizing:border-box;margin:0;padding:0}
-        body{font-family:'Inter',sans-serif;background-color:var(--deep-green);color:var(--off-white);-webkit-font-smoothing:antialiased}
+        body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background-color:var(--deep-green);color:var(--off-white);-webkit-font-smoothing:antialiased}
         .bg-deep-green{background-color:var(--deep-green)}
         .bg-darker-green{background-color:var(--darker-green)}
         .bg-card-green{background-color:var(--card-green)}
@@ -272,8 +284,8 @@ src="https://www.facebook.com/tr?id=1925661201147040&ev=PageView&noscript=1"
         .text-off-white{color:var(--off-white)}
         .text-primary{color:var(--primary)}
         .text-warm-grey{color:var(--warm-grey)}
-        .font-display{font-family:'Playfair Display',serif}
-        .font-sans{font-family:'Inter',sans-serif}
+        .font-display{font-family:'Playfair Display',Georgia,'Times New Roman',serif}
+        .font-sans{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
         .relative{position:relative}
         .absolute{position:absolute}
         .fixed{position:fixed}
@@ -489,6 +501,47 @@ src="https://www.facebook.com/tr?id=1925661201147040&ev=PageView&noscript=1"
         .md\:min-h-\[90vh\]{min-height:90vh}
         .md\:leading-\[1\.75\]{line-height:1.75}
         }
+        /* Classes adicionais faltantes */
+        .text-\[9px\]{font-size:9px}
+        .text-\[10px\]{font-size:10px}
+        .text-\[11px\]{font-size:11px}
+        .border-white\/20{border-color:rgba(255,255,255,0.2)}
+        .text-warm-grey\/60{color:rgba(209,205,199,0.6)}
+        .text-warm-grey\/70{color:rgba(209,205,199,0.7)}
+        .text-warm-grey\/90{color:rgba(209,205,199,0.9)}
+        .bg-warm-grey\/20{background-color:rgba(209,205,199,0.2)}
+        .bg-warm-grey\/50{background-color:rgba(209,205,199,0.5)}
+        .bg-primary\/25{background-color:rgba(201,164,92,0.25)}
+        .bg-primary\/5{background-color:rgba(201,164,92,0.05)}
+        .border-primary\/25{border-color:rgba(201,164,92,0.25)}
+        .border-primary\/0{border-color:rgba(201,164,92,0)}
+        .from-primary\/25{--tw-gradient-from:rgba(201,164,92,0.25)}
+        .via-primary\/20{--tw-gradient-via:rgba(201,164,92,0.2)}
+        .to-primary\/25{--tw-gradient-to:rgba(201,164,92,0.25)}
+        .from-primary\/15{--tw-gradient-from:rgba(201,164,92,0.15)}
+        .to-primary\/5{--tw-gradient-to:rgba(201,164,92,0.05)}
+        .from-deep-green{--tw-gradient-from:#0B2B21}
+        .via-deep-green\/90{--tw-gradient-via:rgba(11,43,33,0.9)}
+        .to-transparent{--tw-gradient-to:transparent}
+        .bg-gradient-to-r{background-image:linear-gradient(to right,var(--tw-gradient-stops))}
+        .bg-gradient-to-br{background-image:linear-gradient(to bottom right,var(--tw-gradient-stops))}
+        .bg-gradient-to-t{background-image:linear-gradient(to top,var(--tw-gradient-stops))}
+        .drop-shadow-lg{filter:drop-shadow(0 10px 8px rgba(0,0,0,0.04)) drop-shadow(0 4px 3px rgba(0,0,0,0.1))}
+        .cursor-pointer{cursor:pointer}
+        .normal-case{text-transform:none}
+        .antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+        .selection\:bg-primary *::selection{background-color:var(--primary)}
+        .selection\:text-deep-green *::selection{color:var(--deep-green)}
+        input[type="text"],input[type="tel"],select,textarea{font-family:inherit;font-size:inherit;line-height:inherit}
+        input::placeholder{color:rgba(255,255,255,0.2)}
+        select{background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23C9A45C' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");background-position:right 0.5rem center;background-repeat:no-repeat;background-size:1.5em 1.5em;padding-right:2.5rem}
+        input:focus,select:focus,textarea:focus{outline:2px solid transparent;outline-offset:2px}
+        .focus\:ring-1:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow,0 0 #0000)}
+        .focus\:ring-primary:focus{--tw-ring-color:var(--primary)}
+        .focus\:border-primary:focus{border-color:var(--primary)}
+        .accent-primary{accent-color:var(--primary)}
+        .youtube-placeholder{position:relative;display:block}
+        svg{display:inline-block;vertical-align:middle}
     </style>
 <style>
     body {
@@ -498,31 +551,29 @@ src="https://www.facebook.com/tr?id=1925661201147040&ev=PageView&noscript=1"
   </head>
 <body class="bg-deep-green text-off-white font-sans antialiased selection:bg-primary selection:text-deep-green">
 <script>
-// Força a página a começar sempre no topo
+// Script não-bloqueante - executa após renderização inicial
 (function() {
-    // Remove hash da URL se existir
-    if (window.location.hash) {
-        history.replaceState(null, null, window.location.pathname + window.location.search);
-    }
+    'use strict';
+    // Usa requestIdleCallback se disponível, senão setTimeout
+    const runWhenIdle = window.requestIdleCallback || function(cb) { setTimeout(cb, 1); };
     
-    // Garante scroll no topo
-    window.scrollTo(0, 0);
-    
-    // Previne scroll automático em navegação com hash
-    window.addEventListener('hashchange', function(e) {
-        // Se for o primeiro carregamento com hash, remove
-        if (performance.navigation.type === 0 && window.location.hash === '#diagnostico') {
-            e.preventDefault();
-            history.replaceState(null, null, window.location.pathname);
-            window.scrollTo(0, 0);
+    runWhenIdle(function() {
+        // Remove hash da URL se existir
+        if (window.location.hash) {
+            history.replaceState(null, null, window.location.pathname + window.location.search);
         }
-    }, false);
-    
-    // Força topo após carregamento completo
-    window.addEventListener('load', function() {
-        setTimeout(function() {
-            window.scrollTo(0, 0);
-        }, 0);
+        
+        // Garante scroll no topo
+        window.scrollTo(0, 0);
+        
+        // Previne scroll automático em navegação com hash
+        window.addEventListener('hashchange', function(e) {
+            if (performance.navigation && performance.navigation.type === 0 && window.location.hash === '#diagnostico') {
+                e.preventDefault();
+                history.replaceState(null, null, window.location.pathname);
+                window.scrollTo(0, 0);
+            }
+        }, false);
     });
 })();
 </script>
